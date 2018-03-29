@@ -52,23 +52,35 @@ function generateComponent(name, styles = config.styles, path = config.path, nod
         console.log('You must run rgen init first!');
         return;
     }
+
+    let componentName = name.split('/');
+    componentName = componentName[componentName.length - 1];
+    componentName = componentName.charAt(0).toUpperCase() + componentName.substring(1);
+
     // generate a styles file and then generate a JS file that imports it
     makeFile(name, styles, path, '', nodir);
 
     // now generate a react component
-    makeFile(name, 'js', path, `import React, { Component } from 'react';\nimport './${name + '.' + styles}';\n\nexport default class ${name} extends Component {\n    render() {\n        return;\n    }\n}`, nodir);
+    makeFile(name, 'js', path, `import React, { Component } from 'react';\nimport './${name + '.' + styles}';\n\nexport default class ${componentName} extends Component {\n    render() {\n        return;\n    }\n}`, nodir);
 }
 
 function makeFile(name, extension, path = config.path, content = '', nodir = false) {
-    console.log('Generating ' + name + '.' + extension + ' to ' + (nodir ? path : path + '/' + name));
-    path = (config.path !== config.path ? config.path : '') + (path.charAt(path.length - 1) === '/' ? path.substring(0, path.length - 1) : path);
-    if (!nodir) path += '/' + name;
-    path = path.replace(/\/{2,}/g, '/');
+
+    // path = (config.path !== config.path ? config.path : '') + (path.charAt(path.length - 1) === '/' ? path.substring(0, path.length - 1) : path);
+    if (!nodir){
+        path += '/' + name;
+    } else {
+        path += name.split('/').slice(0, name.split('/').length - 1).join('/');
+    }
+
+    path = path.replace(/\/{2,}/g, '/') + '.' + extension;
+
+    console.log('Generating ' + path);
 
     makeDirsFromPath(path);
 
     // now write the file
-    fs.writeFile(path + '/' + name + '.' + extension, content, 'utf-8', (err) => {
+    fs.writeFile(path, content, 'utf-8', (err) => {
         if (err) {
             console.log('Error generating ' + name + '.' + extension + ' to ' + path);
             console.log(err);
@@ -79,8 +91,6 @@ function makeFile(name, extension, path = config.path, content = '', nodir = fal
 function makeDirsFromPath(path) {
     let dirs = path.split('/');
     let workingPath = './';
-
-    console.log('starting, path: ', path);
 
     for (let i = 0; i < dirs.length; i++) {
         if (dirs[i] !== '.' && dirs[i].indexOf('.') === -1) {
