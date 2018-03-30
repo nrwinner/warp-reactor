@@ -1,10 +1,10 @@
 {
   "name": "warp-reactor",
-  "version": "1.0.0-alpha.1.5",
+  "version": "1.0.0-alpha.1.6",
   "description": "A basic generator CLI for react components",
   "repository": {
-    "type" : "git",
-    "url" : "https://github.com/nrwinner/warp-reactor"
+    "type": "git",
+    "url": "https://github.com/nrwinner/warp-reactor"
   },
   "main": "index.js",
   "scripts": {
