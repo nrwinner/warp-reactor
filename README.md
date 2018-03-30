@@ -9,10 +9,10 @@ Install via npm
 # Usage
 Initialize warp-reactor in your react project.
 `warp-reactor init`
-option | action
----------|---------
-\-\-styles | Defines the file extension for the style file to be imported by the component: `warp-reactor init --styles scss`
-\-\-path   | Defines the root directory of your components: `warp-reactor init --path ./src`
+|  option  |  action   |
+|----------|----------|
+|\-\-styles | Defines the file extension for the style file to be imported by the component: `warp-reactor init --styles scss`|
+|\-\-path   | Defines the root directory of your components: `warp-reactor init --path ./src`|
 Now you can begin generating components.
 `warp-reactor generate component [component-name]`
 Examples: 
