@@ -16,7 +16,7 @@ Initialize warp-reactor in your react project.
 |  option  |  action   |
 |----------|----------|
 |\-\-styles | Defines the file extension for the style file to be imported by the component: `warp-reactor init --styles scss`|
-|\-\-path   | Defines the root directory of your components: `warp-reactor init --path ./src`|
+|\-\-path   | Defines the root directory of your components: `warp-reactor init --path src`|
 
 Now you can begin generating components.
 
@@ -27,7 +27,7 @@ Examples:
 Running the `generate` command with a path for the name generates a new component at the specified path with the name of the last path element.
 
 ```
-warp-reactor init --styles scss --path ./src
+warp-reactor init --styles scss --path src
 warp-reactor generate component test-directory/test-component
 ```
 Generates test-component.js and test-component.scss to src/test-directory/test-component.
