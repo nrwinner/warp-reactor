@@ -32,6 +32,6 @@ warp-reactor generate component test-directory/test-component
 ```
 Generates test-component.js and test-component.scss to src/test-directory/test-component.
 
-If you would like a component to not be generated in it's own directory, generate it with the `--nodir` flag
+If you would like a component to not be generated in it's own directory, generate it with the `--no-dir` flag
 
 `warp-reactor generate component test-component --nodir`

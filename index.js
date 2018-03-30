@@ -66,11 +66,9 @@ function generateComponent(name, styles = config.styles, path = config.path, nod
 
 function makeFile(name, extension, path = config.path, content = '', nodir = false) {
 
-    // path = (config.path !== config.path ? config.path : '') + (path.charAt(path.length - 1) === '/' ? path.substring(0, path.length - 1) : path);
-    if (!nodir){
+    path += '/' + name;
+    if (!nodir) {
         path += '/' + name;
-    } else {
-        path += name.split('/').slice(0, name.split('/').length - 1).join('/');
     }
 
     path = path.replace(/\/{2,}/g, '/') + '.' + extension;
@@ -97,7 +95,7 @@ function makeDirsFromPath(path) {
             // this isn't the current directory and it's not a file
             if ((!fs.existsSync(workingPath + dirs[i])) || !fs.statSync(workingPath + dirs[i]).isDirectory()) {
                 try {
-                    console.log('creating ' + workingPath + dirs[i]);
+                    console.log('Creating ' + workingPath + dirs[i]);
                     fs.mkdirSync(workingPath + dirs[i]);
                 } catch (error) {
                     console.log('Error creating directory at ' + workingPath + '/' + dirs[i]);
