@@ -4,22 +4,22 @@ const program = require('commander');
 
 // attempt to load config file
 try {
-    var config = JSON.parse(fs.readFileSync('rgen.json', 'utf-8'));
+    var config = JSON.parse(fs.readFileSync('reactor.json', 'utf-8'));
 } catch (error) {
-    // we couldn't find a rgen.json file
+    // we couldn't find a reactor.json file
 }
 
 program.version('0.0.1').description('A simple generator CLI, intended to be used alongside create-react-app');
 
 program
     .command('init')
-    .description('Creates a rgen.json file in the current directory')
+    .description('Creates a reactor.json file in the current directory')
     .option('-s, --styles [styles]', 'When used with the \'init\' command, specifies the extension of style files, IE \'scss\'')
     .option('-p, --path [path]', 'When used with the \'init\' command, specfies the path to which all generate commands will write. You can append to this path later (with the --path option on the \'generate\' command, so it\'s wise set the path here to the root directory')
     .action((cmd) => {
-        fs.writeFileSync('rgen.json', `{\n    "path": "${cmd.path ? './' + cmd.path : './'}",\n    "styles": "${cmd.styles ? cmd.styles : 'css'}"\n}`, 'utf-8', (err) => {
+        fs.writeFileSync('reactor.json', `{\n    "path": "${cmd.path ? './' + cmd.path : './'}",\n    "styles": "${cmd.styles ? cmd.styles : 'css'}"\n}`, 'utf-8', (err) => {
             if (err) {
-                console.log('Error creating rgen.config file!');
+                console.log('Error creating reactor.json!');
             }
         })
     });
@@ -27,12 +27,12 @@ program
     program
     .command('generate <type> <name>')
     .description('Generates a react [component] into the specified directory')
-    .option('-s, --styles [styles]', 'When used with the \'generate\' command, specifies the style type and overrides the style attribute specified in rgen.json file')
-    .option('-p, --path [path]', 'When used with the \'generate\' command, specifies the sub directory in which to generate. Appends to the end of the path specified in rgen.json')
+    .option('-s, --styles [styles]', 'When used with the \'generate\' command, specifies the style type and overrides the style attribute specified in reactor.json file')
+    .option('-p, --path [path]', 'When used with the \'generate\' command, specifies the sub directory in which to generate. Appends to the end of the path specified in reactor.json')
     .option('--no-dir', 'If set, the files will be generated without a parent directory')
     .action((type, name, cmd) => {
         if (!config) {
-            console.log('You must run rgen init first!');
+            console.log('You must run warp-reactor init first!');
             return;
         }
 
@@ -49,7 +49,7 @@ program.parse(process.argv)
 
 function generateComponent(name, styles = config.styles, path = config.path, nodir=false) {
     if (!config) {
-        console.log('You must run rgen init first!');
+        console.log('You must run warp-reactor init first!');
         return;
     }
 
