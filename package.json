@@ -2,6 +2,10 @@
   "name": "warp-reactor",
   "version": "1.0.0-alpha.1.5",
   "description": "A basic generator CLI for react components",
+  "repository": {
+    "type" : "git",
+    "url" : "https://github.com/nrwinner/warp-reactor"
+  },
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
