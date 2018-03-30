@@ -27,7 +27,7 @@ Examples:
 Running the `generate` command with a path for the name generates a new component at the specified path with the name of the last path element.
 
 ```
-warp-reactor init --styles scss -\-path ./src
+warp-reactor init --styles scss --path ./src
 warp-reactor generate component test-directory/test-component
 ```
 Generates test-component.js and test-component.scss to src/test-directory/test-component.
