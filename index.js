@@ -1,6 +1,7 @@
 #!/usr/bin/env node
 const fs = require('fs');
 const program = require('commander');
+const builder = require('./project-builder');
 
 // attempt to load config file
 try {
@@ -46,6 +47,18 @@ program
             return;
         }
     });
+
+program
+    .command('new <name>')
+    .alias('n')
+    .description('Scaffolds a new React app with a reactor.json config')
+    .option('-c, --current-dir', 'Scaffold project in the current directory')
+    .option('-s, --skip-install', 'Skip installing packages.')
+    .action((name, options) => {
+      const dir = `./${name}`
+      builder.cloneStarter(dir, options.currentDir)
+      options.skipInstall ? console.log("You've opted out of installing dependencies.") : builder.installDependencies(name)
+    })
 
 program.parse(process.argv)
 
