@@ -16,8 +16,9 @@ program
     .description('Creates a reactor.json file in the current directory')
     .option('-s, --styles [styles]', 'When used with the \'init\' command, specifies the extension of style files, IE \'scss\'')
     .option('-p, --path [path]', 'When used with the \'init\' command, specfies the path to which all generate commands will write. You can append to this path later (with the --path option on the \'generate\' command, so it\'s wise set the path here to the root directory')
+    .option('-e, --extension [extension]', 'Specifies the extension for component files')
     .action((cmd) => {
-        fs.writeFileSync('reactor.json', `{\n    "path": "${cmd.path ? './' + cmd.path : './'}",\n    "styles": "${cmd.styles ? cmd.styles : 'css'}"\n}`, 'utf-8', (err) => {
+        fs.writeFileSync('reactor.json', `{\n    "extension": "${cmd.extension ? cmd.extension : 'js'}",\n    "path": "${cmd.path ? './' + cmd.path : './'}",\n    "styles": "${cmd.styles ? cmd.styles : 'css'}"\n}`, 'utf-8', (err) => {
             if (err) {
                 console.log('Error creating reactor.json!');
             }
@@ -27,6 +28,7 @@ program
     program
     .command('generate <type> <name>')
     .description('Generates a react [component] into the specified directory')
+    .option('-e, --extension [extension]', 'Specifies an extension to be used in favor of the default listed in reactor.json')
     .option('-s, --styles [styles]', 'When used with the \'generate\' command, specifies the style type and overrides the style attribute specified in reactor.json file')
     .option('-p, --path [path]', 'When used with the \'generate\' command, specifies the sub directory in which to generate. Appends to the end of the path specified in reactor.json')
     .option('--no-dir', 'If set, the files will be generated without a parent directory')
@@ -38,7 +40,7 @@ program
 
         if (type === 'component') {
             let p = cmd.path ? config.path + '/' + cmd.path : config.path;
-            generateComponent(name, cmd.styles, p, !cmd.dir);
+            generateComponent(name, cmd.styles, p, !cmd.dir, cmd.extension);
         } else {
             console.log('Type ' + type + ' is not a valid type!');
             return;
@@ -47,7 +49,7 @@ program
 
 program.parse(process.argv)
 
-function generateComponent(name, styles = config.styles, path = config.path, nodir=false) {
+function generateComponent(name, styles = config.styles, path = config.path, nodir=false, extension = config.extension) {
     if (!config) {
         console.log('You must run warp-reactor init first!');
         return;
@@ -61,7 +63,7 @@ function generateComponent(name, styles = config.styles, path = config.path, nod
     makeFile(name, styles, path, '', nodir);
 
     // now generate a react component
-    makeFile(name, 'js', path, `import React, { Component } from 'react';\nimport './${name + '.' + styles}';\n\nexport default class ${componentName} extends Component {\n    render() {\n        return;\n    }\n}`, nodir);
+    makeFile(name, extension, path, `import React, { Component } from 'react';\nimport './${name + '.' + styles}';\n\nexport default class ${componentName} extends Component {\n    render() {\n        return;\n    }\n}`, nodir);
 }
 
 function makeFile(name, extension, path = config.path, content = '', nodir = false) {
