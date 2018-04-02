@@ -35,3 +35,11 @@ Generates test-component.js and test-component.scss to src/test-directory/test-c
 If you would like a component to not be generated in it's own directory, generate it with the `--no-dir` flag
 
 `warp-reactor generate component test-component --nodir`
+
+### Create a new React app with warp-reactor
+`warp-reactor new [app-name]`
+
+|  option  |  action   |
+|----------|----------|
+|&#8209;&#8209;current&#8209;dir | Creates the new app in the current directory |
+|&#8209;&#8209;skip&#8209;install   | Skips installing dependencies listed in the package.json |
